@@ -15,8 +15,8 @@ import 'package:get_emg_data/util/logger.dart';
 class BleNotifier extends ChangeNotifier {
   BleNotifier(this.ref) : super();
   final Ref ref;
-  static const batteryServiceUUID = "0000180f-0000-1000-8000-00805f9b34fb";
-  static const batteryCharaRXUUID = "00002a19-0000-1000-8000-00805f9b34fb";
+  static const batteryServiceUUID = "180f";
+  static const batteryCharaRXUUID = "2a19";
   static const dataServiceUUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
   static const dataRxTxCharaUUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
@@ -171,6 +171,7 @@ class BleNotifier extends ChangeNotifier {
     }
     for (var service in services) {
       logger.i(service);
+      logger.i(service.uuid);
       switch (service.uuid.toString()) {
         case batteryServiceUUID: //バッテリーサービスのとき
           if (isBatteryServiceFound) break;
@@ -186,7 +187,7 @@ class BleNotifier extends ChangeNotifier {
                   if (value.isNotEmpty) {
                     batteryLevel = value[0];
                     notifyListeners();
-                    //print('battery level: ${value[0]}');
+                    print('battery level: ${value[0]}');
                   }
                 });
               } catch (e) {
