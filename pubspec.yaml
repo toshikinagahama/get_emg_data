@@ -1,0 +1,59 @@
+name: get_emg_data
+description: A new Flutter project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^2.0.0-dev.9
+  flutter_blue_plus: ^1.31.3
+  logger: ^1.1.0
+  fl_chart: ^0.55.2
+  path_provider: ^2.0.11
+  external_path: ^1.0.1
+  permission_handler: ^8.1.4+2
+  intl: ^0.18.1
+  percent_indicator: ^4.0.1
+  auto_route: ^5.0.4
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.1.1
+  google_fonts: ^5.1.0
+  sqflite: ^2.0.2
+  fluttertoast: ^8.1.2
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^1.1.6
+  vibration: ^1.7.3
+  wakelock: ^0.6.2
+  analyzer: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  auto_route_generator: ^5.0.3
+  build_runner:
+  flutter_gen_runner:
+  flutter_lints: ^2.0.0
+
+flutter_gen:
+  output: lib/gen/ # Optional (default: lib/gen/)
+  lineLength: 80 # Optional (default: 80)
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/sql/
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
