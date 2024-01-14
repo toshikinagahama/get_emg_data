@@ -24,6 +24,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_emg_data/provider/database_provider.dart';
 import 'package:get_emg_data/foundation/database_const.dart';
+import 'dart:io'; //ファイル出力用ライブラリ
+import 'package:path_provider/path_provider.dart'; //アプリがファイルを保存可能な場所を取得するライブラリ
+import 'package:external_path/external_path.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RawDataMeasurePage extends HookConsumerWidget {
   const RawDataMeasurePage({Key? key}) : super(key: key);
@@ -120,6 +124,23 @@ class RawDataMeasurePage extends HookConsumerWidget {
     //logger.i(_y1);
     //logger.i(_x2);
     //logger.i(_y2);
+
+    void saveFile(csvString, filename) async {
+      await [Permission.storage].request();
+      String savedPath = "";
+      if (Platform.isAndroid) {
+        savedPath = await ExternalPath.getExternalStoragePublicDirectory(
+            ExternalPath.DIRECTORY_DOWNLOADS);
+      } else {
+        final dir = await getApplicationDocumentsDirectory();
+        savedPath = dir.path;
+      }
+      //Directory? dir = await getApplicationDocumentsDirectory();
+      String logPath = '${savedPath}/${filename}';
+      File textfilePath = File(logPath);
+      await textfilePath.writeAsString(csvString);
+      logger.i("csvfile is saved in ${logPath.toString()}");
+    }
 
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -225,34 +246,13 @@ class RawDataMeasurePage extends HookConsumerWidget {
                         onPressed: () async {
                           var format = DateFormat('yyyy-MM-dd-HH-mm-ss');
                           String filename =
-                              "tanibreath_${format.format(ref.read(bleProvider.notifier).measureRawData.now)}.csv";
-                          //saveFile(ref.read(bleProvider.notifier).csvTextData, filename);
-                          final headers = {
-                            'Content-type': 'application/json; charset=UTF-8',
-                          };
-                          final body = {
-                            "password": "mKSwthAp49p6",
-                            "tag1": tag1.value,
-                            "tag2": tag2.value,
-                            "tag3": tag3.value,
-                            "tag4": tag4.value,
-                            "version": "v1",
-                            "username": "test",
-                            "memo": "",
-                            "time": format.format(ref
-                                .read(bleProvider.notifier)
-                                .measureRawData
-                                .now),
-                            "data": ref
-                                .read(bleProvider.notifier)
-                                .measureRawData
-                                .csvTextData
-                          };
-                          final url = Uri.https(
-                              "3arzyiga5stvrom7cdkaixr4vu0glezc.lambda-url.ap-northeast-1.on.aws",
-                              "");
-                          await http.post(url,
-                              headers: headers, body: json.encode(body));
+                              "hamaemg_${format.format(ref.read(bleProvider.notifier).measureRawData.now)}.csv";
+                          saveFile(
+                              ref
+                                  .read(bleProvider.notifier)
+                                  .measureRawData
+                                  .csvTextData,
+                              filename);
                           Fluttertoast.showToast(msg: "save data");
                         },
                         width: w * 0.3,

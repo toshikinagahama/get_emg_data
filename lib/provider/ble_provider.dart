@@ -171,7 +171,6 @@ class BleNotifier extends ChangeNotifier {
     }
     for (var service in services) {
       logger.i(service);
-      logger.i(service.uuid);
       switch (service.uuid.toString()) {
         case batteryServiceUUID: //バッテリーサービスのとき
           if (isBatteryServiceFound) break;
@@ -186,8 +185,11 @@ class BleNotifier extends ChangeNotifier {
                 batteryCharaStream = chara.value.listen((value) {
                   if (value.isNotEmpty) {
                     batteryLevel = value[0];
+                    if (batteryLevel >= 100) batteryLevel = 100;
+                    if (batteryLevel <= 0) batteryLevel = 0;
                     notifyListeners();
-                    print('battery level: ${value[0]}');
+                    logger.i(DateTime.now());
+                    logger.i('battery level: ${value[0]}');
                   }
                 });
               } catch (e) {
@@ -258,7 +260,7 @@ class BleNotifier extends ChangeNotifier {
   void handleMessage(List<int> value) {
     //メッセージ構造： 総メッセージデータ長(2Byte)、メッセージ番号(2Byte)、データ(nByte)、チェックサム(1Byte)
     //連続測定モード
-    print(value);
+    //print(value);
     if (value.length >= 2) {
       if (value.length == 26) {
         if (value[0] == 0x01 && value[1] == 0x01) {

@@ -31,8 +31,16 @@ class MeasureRawData {
     rawEMG[8] = value[22] | value[23] << 8;
     rawEMG[9] = value[24] | value[25] << 8;
 
-    //csvTextData +=
-    //    '$cnt,$rawEMG\n';
+    csvTextData += '${cnt - 9},${rawEMG[9]}\n';
+    csvTextData += '${cnt - 8},${rawEMG[8]}\n';
+    csvTextData += '${cnt - 7},${rawEMG[7]}\n';
+    csvTextData += '${cnt - 6},${rawEMG[6]}\n';
+    csvTextData += '${cnt - 5},${rawEMG[5]}\n';
+    csvTextData += '${cnt - 4},${rawEMG[4]}\n';
+    csvTextData += '${cnt - 3},${rawEMG[3]}\n';
+    csvTextData += '${cnt - 2},${rawEMG[2]}\n';
+    csvTextData += '${cnt - 1},${rawEMG[1]}\n';
+    csvTextData += '${cnt - 0},${rawEMG[0]}\n';
     timeList.add((cnt) / 500.0);
     EMGList.add(rawEMG[0].toDouble());
     if (cnt > 0) {
