@@ -20,6 +20,7 @@ class MeasureRawData {
   void update(List<int> value) {
     List<int> rawEMG = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     cnt = value[2] | value[3] << 8 | value[4] << 16 | value[5] << 24;
+    //logger.i(cnt);
     rawEMG[0] = value[6] | value[7] << 8;
     rawEMG[1] = value[8] | value[9] << 8;
     rawEMG[2] = value[10] | value[11] << 8;

@@ -5,7 +5,7 @@ description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.0.0 <3.3.0"
 
 dependencies:
   flutter:
@@ -19,7 +19,7 @@ dependencies:
   path_provider: ^2.0.11
   external_path: ^1.0.1
   permission_handler: ^8.1.4+2
-  intl: ^0.18.1
+  intl: ^0.18.0
   percent_indicator: ^4.0.1
   auto_route: ^5.0.4
   flutter_hooks: ^0.18.0
