@@ -29,6 +29,7 @@ import 'package:path_provider/path_provider.dart'; //アプリがファイルを
 import 'package:external_path/external_path.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+@RoutePage()
 class RawDataMeasurePage extends HookConsumerWidget {
   const RawDataMeasurePage({Key? key}) : super(key: key);
 

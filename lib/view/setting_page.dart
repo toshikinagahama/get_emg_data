@@ -10,6 +10,7 @@ import 'package:get_emg_data/data/model/user.dart';
 import 'package:get_emg_data/data/model/setting.dart';
 import 'package:get_emg_data/util/logger.dart';
 
+@RoutePage()
 class SettingPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {

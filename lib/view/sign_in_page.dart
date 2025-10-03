@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get_emg_data/component/app_button.dart';
 import 'package:get_emg_data/foundation/app_color.dart';
 import 'package:get_emg_data/provider/user_provider.dart';
-import 'package:get_emg_data/route/app_route.gr.dart';
 import 'package:get_emg_data/provider/database_provider.dart';
 import 'package:get_emg_data/foundation/database_const.dart';
 import 'package:get_emg_data/data/model/user.dart';
@@ -18,6 +17,7 @@ import 'package:get_emg_data/foundation/setting.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+@RoutePage()
 class SignInPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {

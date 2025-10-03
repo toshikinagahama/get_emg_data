@@ -80,7 +80,7 @@ class SimpleSensorChartArea extends StatelessWidget {
                 show: false, // 外枠線の有無
               ),
             ),
-            swapAnimationDuration: zeroDuration,
+            duration: zeroDuration,
           )),
     ]);
   }

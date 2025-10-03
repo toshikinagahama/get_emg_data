@@ -42,7 +42,7 @@ class SensorChartArea2 extends StatelessWidget {
               maxY: _maxY,
               lineBarsData: [
                 LineChartBarData(
-                  spots: _dataList2,
+                  spots: _dataList2!,
                   isCurved: false,
                   barWidth: 20,
                   color: Color.fromARGB(40, 74, 74, 74),
@@ -51,7 +51,7 @@ class SensorChartArea2 extends StatelessWidget {
                   ),
                 ),
                 LineChartBarData(
-                  spots: _dataList1,
+                  spots: _dataList1!,
                   isCurved: false,
                   barWidth: 2,
                   color: const Color.fromARGB(255, 0, 0, 0),
@@ -61,7 +61,7 @@ class SensorChartArea2 extends StatelessWidget {
                 ),
                 _guideLineList?[0].x != 0
                     ? LineChartBarData(
-                        spots: _guideLineList,
+                        spots: _guideLineList!,
                         isCurved: false,
                         barWidth: 1,
                         dashArray: [2, 2],
@@ -71,7 +71,7 @@ class SensorChartArea2 extends StatelessWidget {
                         ),
                       )
                     : LineChartBarData(
-                        spots: _guideLineList,
+                        spots: _guideLineList!,
                         isCurved: false,
                         barWidth: 1,
                         color: const Color.fromARGB(0, 98, 98, 98),
@@ -118,7 +118,7 @@ class SensorChartArea2 extends StatelessWidget {
                 show: false, // 外枠線の有無
               ),
             ),
-            swapAnimationDuration: zeroDuration,
+            duration: zeroDuration,
           )),
     ]);
   }

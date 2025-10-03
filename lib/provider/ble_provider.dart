@@ -84,7 +84,7 @@ class BleNotifier extends ChangeNotifier {
       if (isAvailable) FlutterBluePlus.setLogLevel(LogLevel.debug);
     });
     List<String> deviceNameList = [];
-    const timeout = Duration(milliseconds: 1000);
+    const timeout = Duration(milliseconds: 1500);
     FlutterBluePlus.startScan(
         timeout: timeout, androidUsesFineLocation: false); //0.5秒間スキャン
     FlutterBluePlus.scanResults.listen((results) async {
@@ -96,7 +96,7 @@ class BleNotifier extends ChangeNotifier {
         deviceNameList.add(r.device.name);
       }
     });
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1500));
     return deviceNameList;
   }
 

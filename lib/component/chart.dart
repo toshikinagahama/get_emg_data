@@ -43,7 +43,7 @@ class SensorChartArea extends StatelessWidget {
               maxY: _maxY,
               lineBarsData: [
                 LineChartBarData(
-                  spots: _dataList,
+                  spots: _dataList!,
                   isCurved: false,
                   barWidth: 2,
                   color: _color,
@@ -89,7 +89,7 @@ class SensorChartArea extends StatelessWidget {
                 show: false, // 外枠線の有無
               ),
             ),
-            swapAnimationDuration: zeroDuration,
+            duration: zeroDuration,
           )),
     ]);
   }

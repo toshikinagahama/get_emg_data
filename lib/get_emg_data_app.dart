@@ -3,9 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:get_emg_data/foundation/app_text_theme.dart';
-import 'package:get_emg_data/route/app_route.gr.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get_emg_data/provider/database_provider.dart';
+import 'package:get_emg_data/route/app_route.dart';
 
 class GetBreathDataApp extends HookConsumerWidget {
   GetBreathDataApp({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class GetBreathDataApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appRouter = useMemoized(() => AppRouter());
+    final appRouter = useMemoized(() => AppRouter(ref));
 
     return FutureBuilder(
       future: _init,
