@@ -262,7 +262,7 @@ class BleNotifier extends ChangeNotifier {
     //連続測定モード
     //print(value);
     if (value.length >= 2) {
-      if (value.length == 26) {
+      if (value.length >= 26) {
         if (value[0] == 0x01 && value[1] == 0x01) {
           measureRawData.update(value);
           notifyListeners();
@@ -274,8 +274,17 @@ class BleNotifier extends ChangeNotifier {
   //機器情報取得
   void getDeviceInfo() {}
 
-  //測定開始
-  void startMeas() async {
+  //ECG測定開始
+  void startMeasEcg() async {
+    measureRawData.initialize();
+    //コマンド送信
+    if (dataRxTxChara == null) return;
+    var command = [0x01, 0x02];
+    dataRxTxChara!.write(command, withoutResponse: false);
+  }
+
+  //IMP測定開始
+  void startMeasImp() async {
     measureRawData.initialize();
     //コマンド送信
     if (dataRxTxChara == null) return;

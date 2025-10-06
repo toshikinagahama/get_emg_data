@@ -1,22 +1,15 @@
 import 'package:flutter/services.dart';
 import 'package:get_emg_data/component/app_scaffold.dart';
-import 'package:get_emg_data/component/settings_menu.dart';
-import 'package:get_emg_data/foundation/app_color.dart';
 import 'package:get_emg_data/foundation/app_text_theme.dart';
 import 'package:get_emg_data/util/logger.dart';
 import 'package:intl/intl.dart';
-import 'package:get_emg_data/util/func.dart';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import 'package:fl_chart/fl_chart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:get_emg_data/view/setting_page.dart';
 import 'package:get_emg_data/component/chart.dart';
 import 'package:get_emg_data/provider/model_providers.dart';
-import "package:get_emg_data/provider/user_provider.dart";
 import 'package:get_emg_data/component/app_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -52,6 +45,12 @@ class RawDataMeasurePage extends HookConsumerWidget {
         ref.watch(bleProvider.select((value) => value.measureRawData.timeList));
     List<double> EMGList =
         ref.watch(bleProvider.select((value) => value.measureRawData.EMGList));
+    List<double> Z1List =
+        ref.watch(bleProvider.select((value) => value.measureRawData.Z1List));
+    List<double> Z2List =
+        ref.watch(bleProvider.select((value) => value.measureRawData.Z2List));
+    List<double> Z3List =
+        ref.watch(bleProvider.select((value) => value.measureRawData.Z3List));
     Color batteryColor = const Color.fromRGBO(255, 255, 255, 1.0);
     if (batteryLevel < 30) {
       batteryColor = const Color.fromRGBO(255, 0, 0, 1.0);
@@ -66,6 +65,15 @@ class RawDataMeasurePage extends HookConsumerWidget {
       case 0:
         firstData = EMGList;
         break;
+      case 1:
+        firstData = Z1List;
+        break;
+      case 2:
+        firstData = Z2List;
+        break;
+      case 3:
+        firstData = Z3List;
+        break;
       default:
         firstData = EMGList;
         break;
@@ -74,20 +82,29 @@ class RawDataMeasurePage extends HookConsumerWidget {
       case 0:
         secondData = EMGList;
         break;
+      case 1:
+        secondData = Z1List;
+        break;
+      case 2:
+        secondData = Z2List;
+        break;
+      case 3:
+        secondData = Z3List;
+        break;
       default:
         secondData = EMGList;
         break;
     }
     if (timeList.length >= 250) {
       _x1 = timeList.sublist(timeList.length - 250);
-      _y1 = EMGList.sublist(EMGList.length - 250);
+      _y1 = firstData.sublist(firstData.length - 250);
       _x2 = timeList.sublist(timeList.length - 250);
-      _y2 = EMGList.sublist(EMGList.length - 250);
+      _y2 = secondData.sublist(secondData.length - 250);
     } else {
       _x1 = timeList;
-      _y1 = EMGList;
+      _y1 = firstData;
       _x2 = timeList;
-      _y2 = EMGList;
+      _y2 = secondData;
     }
     //if (firstData.length > firstMoveNum.value + 5) {
     //  int s = firstData.length - 150 - 4 * firstMoveNum.value;
@@ -283,19 +300,19 @@ class RawDataMeasurePage extends HookConsumerWidget {
                                       items: const [
                                         DropdownMenuItem(
                                           value: 0,
-                                          child: Text('R50'),
+                                          child: Text('ECG'),
                                         ),
                                         DropdownMenuItem(
                                           value: 1,
-                                          child: Text('X50'),
+                                          child: Text('Z1'),
                                         ),
                                         DropdownMenuItem(
                                           value: 2,
-                                          child: Text('Z50'),
+                                          child: Text('Z2'),
                                         ),
                                         DropdownMenuItem(
                                           value: 3,
-                                          child: Text('PPG'),
+                                          child: Text('Z3'),
                                         ),
                                       ],
                                       onChanged: (int? value) {
@@ -340,19 +357,19 @@ class RawDataMeasurePage extends HookConsumerWidget {
                                       items: const [
                                         DropdownMenuItem(
                                           value: 0,
-                                          child: Text('R50'),
+                                          child: Text('ECG'),
                                         ),
                                         DropdownMenuItem(
                                           value: 1,
-                                          child: Text('X50'),
+                                          child: Text('Z1'),
                                         ),
                                         DropdownMenuItem(
                                           value: 2,
-                                          child: Text('Z50'),
+                                          child: Text('Z2'),
                                         ),
                                         DropdownMenuItem(
                                           value: 3,
-                                          child: Text('PPG'),
+                                          child: Text('Z3'),
                                         ),
                                       ],
                                       onChanged: (int? value) {
@@ -490,14 +507,24 @@ class RawDataMeasurePage extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AppButton(
-                        text: "Start",
+                        text: "Start(ECG only)",
                         onPressed: () {
-                          ref.read(bleProvider.notifier).startMeas();
+                          ref.read(bleProvider.notifier).startMeasEcg();
                         },
-                        width: w * 0.3,
+                        width: w * 0.2,
                       ),
                       SizedBox(
-                        width: 30,
+                        width: 10,
+                      ),
+                      AppButton(
+                        text: "Start",
+                        onPressed: () {
+                          ref.read(bleProvider.notifier).startMeasImp();
+                        },
+                        width: w * 0.2,
+                      ),
+                      SizedBox(
+                        width: 10,
                       ),
                       AppButton(
                         text: "Stop",
@@ -508,7 +535,7 @@ class RawDataMeasurePage extends HookConsumerWidget {
                               .measureRawData
                               .cnt);
                         },
-                        width: w * 0.3,
+                        width: w * 0.2,
                       ),
                     ],
                   )
