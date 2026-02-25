@@ -5,6 +5,7 @@ import 'package:external_path/external_path.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get_emg_data/foundation/model_weights.dart';
 import 'dart:math';
+import 'package:share_plus/share_plus.dart';
 
 //64点のデータ
 //List<double> hamming = [
@@ -651,8 +652,8 @@ void saveFile(csvString, filename) async {
   await [Permission.storage].request();
   String savedPath = "";
   if (Platform.isAndroid) {
-    savedPath = await ExternalPath.getExternalStoragePublicDirectory(
-        ExternalPath.DIRECTORY_DOWNLOADS);
+    savedPath =
+        await ExternalPath.getExternalStoragePublicDirectory("Download");
   } else {
     final dir = await getApplicationDocumentsDirectory();
     savedPath = dir.path;
@@ -661,7 +662,8 @@ void saveFile(csvString, filename) async {
   String logPath = '${savedPath}/${filename}';
   File textfilePath = File(logPath);
   await textfilePath.writeAsString(csvString);
-  logger.i("csvfile is saved in ${logPath.toString()}");
+  await SharePlus.instance
+      .share(ShareParams(files: [XFile(textfilePath.path)]));
 }
 
 double iir(int size, List<double> a, List<double> b, List<double> raw,

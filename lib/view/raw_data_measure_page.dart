@@ -9,6 +9,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:get_emg_data/component/chart.dart';
+import 'package:get_emg_data/util/func.dart';
 import 'package:get_emg_data/provider/model_providers.dart';
 import 'package:get_emg_data/component/app_button.dart';
 import 'package:auto_route/auto_route.dart';
@@ -142,23 +143,6 @@ class RawDataMeasurePage extends HookConsumerWidget {
     //logger.i(_y1);
     //logger.i(_x2);
     //logger.i(_y2);
-
-    void saveFile(csvString, filename) async {
-      await [Permission.storage].request();
-      String savedPath = "";
-      if (Platform.isAndroid) {
-        savedPath = await ExternalPath.getExternalStoragePublicDirectory(
-            ExternalPath.DIRECTORY_DOWNLOADS);
-      } else {
-        final dir = await getApplicationDocumentsDirectory();
-        savedPath = dir.path;
-      }
-      //Directory? dir = await getApplicationDocumentsDirectory();
-      String logPath = '${savedPath}/${filename}';
-      File textfilePath = File(logPath);
-      await textfilePath.writeAsString(csvString);
-      logger.i("csvfile is saved in ${logPath.toString()}");
-    }
 
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

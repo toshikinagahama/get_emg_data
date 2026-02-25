@@ -8,7 +8,7 @@
 PRODUCT_NAME = get_emg_data
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.getEmgData
+PRODUCT_BUNDLE_IDENTIFIER = com.hama.getEmgData
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 com.hama. All rights reserved.
