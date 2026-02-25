@@ -46,12 +46,8 @@ class RawDataMeasurePage extends HookConsumerWidget {
         ref.watch(bleProvider.select((value) => value.measureRawData.timeList));
     List<double> EMGList =
         ref.watch(bleProvider.select((value) => value.measureRawData.EMGList));
-    List<double> Z1List =
-        ref.watch(bleProvider.select((value) => value.measureRawData.Z1List));
-    List<double> Z2List =
-        ref.watch(bleProvider.select((value) => value.measureRawData.Z2List));
-    List<double> Z3List =
-        ref.watch(bleProvider.select((value) => value.measureRawData.Z3List));
+    List<double> ZList =
+        ref.watch(bleProvider.select((value) => value.measureRawData.ZList));
     Color batteryColor = const Color.fromRGBO(255, 255, 255, 1.0);
     if (batteryLevel < 30) {
       batteryColor = const Color.fromRGBO(255, 0, 0, 1.0);
@@ -67,13 +63,7 @@ class RawDataMeasurePage extends HookConsumerWidget {
         firstData = EMGList;
         break;
       case 1:
-        firstData = Z1List;
-        break;
-      case 2:
-        firstData = Z2List;
-        break;
-      case 3:
-        firstData = Z3List;
+        firstData = ZList;
         break;
       default:
         firstData = EMGList;
@@ -84,13 +74,7 @@ class RawDataMeasurePage extends HookConsumerWidget {
         secondData = EMGList;
         break;
       case 1:
-        secondData = Z1List;
-        break;
-      case 2:
-        secondData = Z2List;
-        break;
-      case 3:
-        secondData = Z3List;
+        secondData = ZList;
         break;
       default:
         secondData = EMGList;
@@ -107,42 +91,6 @@ class RawDataMeasurePage extends HookConsumerWidget {
       _x2 = timeList;
       _y2 = secondData;
     }
-    //if (firstData.length > firstMoveNum.value + 5) {
-    //  int s = firstData.length - 150 - 4 * firstMoveNum.value;
-    //  if (s < 0) s = 0;
-    //  if (s >= firstMoveNum.value + 5) {
-    //    for (int i = s + firstMoveNum.value; i < firstData.length; i++) {
-    //      //5秒
-    //      _x1.add(timeList[i]);
-    //      double mean = 0.0;
-    //      for (int j = 0; j < firstMoveNum.value + 1; j++) {
-    //        mean += firstData[i - j];
-    //      }
-    //      mean /= (firstMoveNum.value.toDouble() + 1.0);
-    //      _y1.add(mean);
-    //    }
-    //  }
-    //}
-    //if (secondData.length > secondMoveNum.value + 5) {
-    //  int s = secondData.length - 150 - 4 * secondMoveNum.value;
-    //  if (s < 0) s = 0;
-    //  if (s >= secondMoveNum.value + 5) {
-    //    for (int i = s + secondMoveNum.value; i < secondData.length; i++) {
-    //      //5秒
-    //      _x2.add(timeList[i]);
-    //      double mean = 0.0;
-    //      for (int j = 0; j < secondMoveNum.value + 1; j++) {
-    //        mean += secondData[i - j];
-    //      }
-    //      mean /= (secondMoveNum.value.toDouble() + 1.0);
-    //      _y2.add(mean);
-    //    }
-    //  }
-    //}
-    //logger.i(_x1);
-    //logger.i(_y1);
-    //logger.i(_x2);
-    //logger.i(_y2);
 
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -288,15 +236,7 @@ class RawDataMeasurePage extends HookConsumerWidget {
                                         ),
                                         DropdownMenuItem(
                                           value: 1,
-                                          child: Text('Z1'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2,
-                                          child: Text('Z2'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 3,
-                                          child: Text('Z3'),
+                                          child: Text('Z'),
                                         ),
                                       ],
                                       onChanged: (int? value) {
@@ -345,15 +285,7 @@ class RawDataMeasurePage extends HookConsumerWidget {
                                         ),
                                         DropdownMenuItem(
                                           value: 1,
-                                          child: Text('Z1'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2,
-                                          child: Text('Z2'),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 3,
-                                          child: Text('Z3'),
+                                          child: Text('Z'),
                                         ),
                                       ],
                                       onChanged: (int? value) {
